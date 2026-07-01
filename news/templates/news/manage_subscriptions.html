@@ -1,0 +1,48 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<h1>Manage Subscriptions</h1>
+
+<h2>Publishers</h2>
+
+{% for publisher in publishers %}
+    <div>
+        <p>{{ publisher.name }}</p>
+
+        {% if publisher in user.publisher_subscriptions.all %}
+            <a href="{% url 'toggle_publisher_subscription' publisher.id %}">
+                Unsubscribe
+            </a>
+        {% else %}
+            <a href="{% url 'toggle_publisher_subscription' publisher.id %}">
+                Subscribe
+            </a>
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+    <p>No publishers available.</p>
+{% endfor %}
+
+<h2>Journalists</h2>
+
+{% for journalist in journalists %}
+    <div>
+        <p>{{ journalist.username }}</p>
+
+        {% if journalist in user.journalist_subscriptions.all %}
+            <a href="{% url 'toggle_journalist_subscription' journalist.id %}">
+                Unsubscribe
+            </a>
+        {% else %}
+            <a href="{% url 'toggle_journalist_subscription' journalist.id %}">
+                Subscribe
+            </a>
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+    <p>No journalists available.</p>
+{% endfor %}
+
+{% endblock %}

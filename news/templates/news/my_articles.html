@@ -1,0 +1,28 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<h1>My Articles</h1>
+
+<a href="{% url 'create_article' %}">Create New Article</a>
+
+<hr>
+
+{% for article in articles %}
+    <div>
+        <h2>{{ article.title }}</h2>
+
+        {% if article.approved %}
+            <p>Status: Approved</p>
+        {% else %}
+            <p>Status: Waiting for approval</p>
+        {% endif %}
+
+        <a href="{% url 'edit_article' article.id %}">Edit</a>
+        <a href="{% url 'delete_article' article.id %}">Delete</a>
+    </div>
+    <hr>
+{% empty %}
+    <p>You have not written any articles yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<p>Welcome, {{ user.username }}.</p>
+<p>Your role is: {{ user.role }}</p>
+
+{% if user.role == 'reader' %}
+    <h2>Reader Dashboard</h2>
+    <p>You can view articles and newsletters.</p>
+    <p><a href="{% url 'manage_subscriptions' %}">Manage Subscriptions</a></p>
+
+{% elif user.role == 'journalist' %}
+    <h2>Journalist Dashboard</h2>
+    <p>You can create and manage articles and newsletters.</p>
+    <p><a href="{% url 'create_article' %}">Create Article</a></p>
+    <p><a href="{% url 'my_articles' %}">My Articles</a></p>
+
+{% elif user.role == 'editor' %}
+    <h2>Editor Dashboard</h2>
+    <p>You can review, approve, update and delete articles and newsletters.</p>
+    <p><a href="{% url 'approve_articles' %}">Approve Pending Articles</a></p>
+{% endif %}
+
+<p>
+    <a href="{% url 'approve_articles' %}">
+        Approve Pending Articles
+    </a>
+</p>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+
+<h1>Publishers</h1>
+
+{% if user.role == 'editor' %}
+    <p><a href="{% url 'create_publisher' %}">Create Publisher</a></p>
+{% endif %}
+
+<hr>
+
+{% for publisher in publishers %}
+
+<div>
+    <h2>
+        <a href="{% url 'publisher_detail' publisher.id %}">
+            {{ publisher.name }}
+        </a>
+    </h2>
+
+    <p>{{ publisher.description }}</p>
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No publishers available.</p>
+
+{% endfor %}
+
+{% endblock %}

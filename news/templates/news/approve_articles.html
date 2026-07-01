@@ -1,0 +1,29 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+
+<h1>Approve Articles</h1>
+
+{% for article in articles %}
+
+<div>
+
+    <h2>{{ article.title }}</h2>
+
+    <p>{{ article.author.username }}</p>
+
+    <a href="{% url 'approve_article' article.id %}">
+        Approve
+    </a>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No articles waiting for approval.</p>
+
+{% endfor %}
+
+{% endblock %}

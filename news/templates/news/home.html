@@ -1,0 +1,13 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<h1>News Application</h1>
+
+<p>Welcome to the news application.</p>
+
+{% if user.is_authenticated %}
+    <p>You are logged in as {{ user.username }}.</p>
+{% else %}
+    <p>Please login or register to continue.</p>
+{% endif %}
+{% endblock %}
