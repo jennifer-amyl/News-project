@@ -1,18 +1,32 @@
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+"""
+Views for the News Application.
 
-from .forms import RegisterForm
-from .forms import ArticleForm, NewsletterForm
-from .models import Article, Newsletter
-from .forms import ArticleForm, NewsletterForm, PublisherForm
-from .models import Article, Newsletter, Publisher
-from .models import Article, CustomUser, Newsletter, Publisher
+This module contains all page views for authentication,
+articles, newsletters, publishers, subscriptions and
+editor approval.
+"""
 
 import requests
 
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import (
+    ArticleForm,
+    NewsletterForm,
+    PublisherForm,
+    RegisterForm,
+)
+from .models import (
+    Article,
+    CustomUser,
+    Newsletter,
+    Publisher,
+)
 
 def home(request):
     return render(request, 'news/home.html')
@@ -48,6 +62,12 @@ def article_detail(request, article_id):
 
 @login_required
 def create_article(request):
+
+    """
+    Allow a journalist to create a new article.
+    New articles require editor approval before publication.
+    """
+
     if request.user.role != 'journalist':
         messages.error(request, 'Only journalists can create articles.')
         return redirect('dashboard')
@@ -107,6 +127,11 @@ def notify_subscribers(article, request):
 @login_required
 def approve_articles(request):
 
+    """
+    Allow a journalist to create a new article.
+    New articles require editor approval before publication.
+    """
+
     if request.user.role != 'editor':
         messages.error(request, 'Only editors can approve articles.')
         return redirect('dashboard')
@@ -122,6 +147,11 @@ def approve_articles(request):
 
 @login_required
 def approve_article(request, article_id):
+
+    """
+    Approve an article, notify subscribers and
+    send the approved article to the API endpoint.
+    """
 
     if request.user.role != 'editor':
         messages.error(request, 'Only editors can approve articles.')
@@ -228,7 +258,6 @@ def create_newsletter(request):
         form = NewsletterForm()
 
     return render(request, 'news/create_newsletter.html', {'form': form})
-
 
 @login_required
 def edit_newsletter(request, newsletter_id):
@@ -364,9 +393,3 @@ def toggle_journalist_subscription(request, journalist_id):
         messages.success(request, f'Subscribed to {journalist.username}.')
 
     return redirect('manage_subscriptions')
-
-from django.contrib import messages
-from django.shortcuts import get_object_or_404
-
-from .forms import ArticleForm
-from .models import Article

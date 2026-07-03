@@ -2,28 +2,49 @@
 
 {% block content %}
 
-<h1>Approve Articles</h1>
+<div class="container mt-4">
 
-{% for article in articles %}
+    <h1>Approve Articles</h1>
 
-<div>
+    {% for article in articles %}
 
-    <h2>{{ article.title }}</h2>
+        <div class="card mb-3">
 
-    <p>{{ article.author.username }}</p>
+            <div class="card-body">
 
-    <a href="{% url 'approve_article' article.id %}">
-        Approve
-    </a>
+                <h3>{{ article.title }}</h3>
+
+                <p><strong>Author:</strong> {{ article.author.username }}</p>
+
+                {% if article.publisher %}
+                    <p><strong>Publisher:</strong> {{ article.publisher.name }}</p>
+                {% endif %}
+
+                <a class="btn btn-success"
+                   href="{% url 'approve_article' article.id %}">
+                    Approve
+                </a>
+
+                <a class="btn btn-warning"
+                   href="{% url 'edit_article' article.id %}">
+                    Edit
+                </a>
+
+                <a class="btn btn-danger"
+                   href="{% url 'delete_article' article.id %}">
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p>No articles waiting for approval.</p>
+
+    {% endfor %}
 
 </div>
-
-<hr>
-
-{% empty %}
-
-<p>No articles waiting for approval.</p>
-
-{% endfor %}
 
 {% endblock %}

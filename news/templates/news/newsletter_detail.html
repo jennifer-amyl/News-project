@@ -9,13 +9,15 @@
 <h2>Articles in this newsletter</h2>
 
 {% for article in newsletter.articles.all %}
-    <p>
-        <a href="{% url 'article_detail' article.id %}">
-            {{ article.title }}
-        </a>
-    </p>
+    {% if article.approved %}
+        <p>
+            <a href="{% url 'article_detail' article.id %}">
+                {{ article.title }}
+            </a>
+        </p>
+    {% endif %}
 {% empty %}
-    <p>No articles added.</p>
+    <p>No approved articles added.</p>
 {% endfor %}
 
 {% if user.role == 'editor' or user == newsletter.author %}

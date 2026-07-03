@@ -48,6 +48,9 @@ Run the automated tests using:
 ```bash
 python manage.py test
 ```
+## GitHub Repository
+
+https://github.com/jennifer-amyl/News-project
 
 ## Author
 

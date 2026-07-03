@@ -1,8 +1,18 @@
+"""
+Database models for the News Application.
+"""
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
+
+    """
+    Custom user model supporting Reader,
+    Journalist and Editor roles.
+    """
+
     READER = 'reader'
     JOURNALIST = 'journalist'
     EDITOR = 'editor'
@@ -34,9 +44,29 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+   
+    def save(self, *args, **kwargs):
+        """
+        Clear role-specific fields when the user role changes.
+
+        Readers can have subscriptions.
+        Journalists should not use reader subscription fields.
+        Editors should not use reader subscription fields.
+        """
+        super().save(*args, **kwargs)
+
+        if self.role in [self.JOURNALIST, self.EDITOR]:
+            self.publisher_subscriptions.clear()
+            self.journalist_subscriptions.clear()
 
 
 class Publisher(models.Model):
+
+    """
+    Represents a news publisher.
+    """
+
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
 
@@ -57,6 +87,11 @@ class Publisher(models.Model):
 
 
 class Article(models.Model):
+
+    """
+    Represents a news article written by a journalist.
+    """
+
     title = models.CharField(max_length=200)
     content = models.TextField()
 
@@ -83,6 +118,11 @@ class Article(models.Model):
 
 
 class Newsletter(models.Model):
+
+    """
+    Represents a newsletter containing multiple articles.
+    """
+
     title = models.CharField(max_length=200)
     description = models.TextField()
 
@@ -102,3 +142,4 @@ class Newsletter(models.Model):
 
     def __str__(self):
         return self.title
+        

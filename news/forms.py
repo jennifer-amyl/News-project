@@ -1,3 +1,7 @@
+"""
+Forms used throughout the News Application.
+"""
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
@@ -30,6 +34,12 @@ class ArticleForm(forms.ModelForm):
 
 
 class NewsletterForm(forms.ModelForm):
+    articles = forms.ModelMultipleChoiceField(
+        queryset=Article.objects.filter(approved=True),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
     class Meta:
         model = Newsletter
         fields = [

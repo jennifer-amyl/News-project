@@ -1,32 +1,73 @@
 {% extends 'news/base.html' %}
 
 {% block content %}
-<h1>Dashboard</h1>
 
-<p>Welcome, {{ user.username }}.</p>
-<p>Your role is: {{ user.role }}</p>
+<div class="container mt-4">
 
-{% if user.role == 'reader' %}
-    <h2>Reader Dashboard</h2>
-    <p>You can view articles and newsletters.</p>
-    <p><a href="{% url 'manage_subscriptions' %}">Manage Subscriptions</a></p>
+    <h1>Dashboard</h1>
 
-{% elif user.role == 'journalist' %}
-    <h2>Journalist Dashboard</h2>
-    <p>You can create and manage articles and newsletters.</p>
-    <p><a href="{% url 'create_article' %}">Create Article</a></p>
-    <p><a href="{% url 'my_articles' %}">My Articles</a></p>
+    <p>Welcome, <strong>{{ user.username }}</strong>.</p>
 
-{% elif user.role == 'editor' %}
-    <h2>Editor Dashboard</h2>
-    <p>You can review, approve, update and delete articles and newsletters.</p>
-    <p><a href="{% url 'approve_articles' %}">Approve Pending Articles</a></p>
-{% endif %}
+    <p>Your role is: <strong>{{ user.role }}</strong></p>
 
-<p>
-    <a href="{% url 'approve_articles' %}">
-        Approve Pending Articles
-    </a>
-</p>
+    <hr>
+
+    {% if user.role == 'reader' %}
+
+        <h2>Reader Dashboard</h2>
+
+        <p>You can view articles and newsletters.</p>
+
+        <a class="btn btn-primary"
+           href="{% url 'manage_subscriptions' %}">
+            Manage Subscriptions
+        </a>
+
+    {% elif user.role == 'journalist' %}
+
+        <h2>Journalist Dashboard</h2>
+
+        <a class="btn btn-primary"
+           href="{% url 'create_article' %}">
+            Create Article
+        </a>
+
+        <a class="btn btn-secondary"
+           href="{% url 'my_articles' %}">
+            My Articles
+        </a>
+
+        <a class="btn btn-success"
+           href="{% url 'create_newsletter' %}">
+            Create Newsletter
+        </a>
+
+    {% elif user.role == 'editor' %}
+
+        <h2>Editor Dashboard</h2>
+
+        <a class="btn btn-success"
+           href="{% url 'approve_articles' %}">
+            Approve Pending Articles
+        </a>
+
+        <a class="btn btn-warning"
+           href="{% url 'article_list' %}">
+            Manage Approved Articles
+        </a>
+
+        <a class="btn btn-primary"
+           href="{% url 'create_newsletter' %}">
+            Create Newsletter
+        </a>
+
+        <a class="btn btn-info"
+           href="{% url 'publisher_list' %}">
+            Manage Publishers
+        </a>
+
+    {% endif %}
+
+</div>
 
 {% endblock %}

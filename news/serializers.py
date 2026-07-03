@@ -1,3 +1,7 @@
+"""
+REST API serializers.
+"""
+
 from rest_framework import serializers
 
 from .models import Article, CustomUser, Newsletter, Publisher
