@@ -1,57 +1,157 @@
-# News Application
+# News Website Capstone
 
 ## Overview
 
-This is a Django-based news application developed as part of the HyperionDev Software Engineering Bootcamp.
+This project is a Django-based news website developed as part of the HyperionDev Software Engineering Bootcamp.
 
-The application allows readers to browse news articles and newsletters, journalists to create content, and editors to review and approve articles before publication.
+The application allows users to:
 
-## Features
+- Register and log in
+- View approved news articles
+- Create and manage articles (Journalists)
+- Read articles and newsletters (Readers)
+- Manage users through the Django admin panel
 
-- User authentication
-- Custom user model
-- Reader, Journalist and Editor roles
-- Django Groups and Permissions
-- Article CRUD
-- Newsletter CRUD
-- Publisher management
-- Reader subscriptions
-- Article approval workflow
-- Email notifications
-- Django REST Framework API
-- Token Authentication
-- Automated unit tests
-- MariaDB database
+The project has been version controlled using Git, documented using Sphinx and containerised using Docker.
 
-## Technologies
+---
 
-- Python
+## Technologies Used
+
+- Python 3
 - Django
-- Django REST Framework
-- MariaDB
-- Bootstrap 5
-- HTML
+- SQLite
 - Git
+- Docker
+- Sphinx
 
-## Installation
+---
+
+## Installation (Virtual Environment)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+cd YOUR_REPOSITORY
+```
+
+### 2. Create a virtual environment
+
+Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Mac/Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+### 4. Configure the project
+
+If your project requires any secret keys or environment variables, create them before running the application.
+
+Do not commit passwords, secret keys or access tokens to GitHub.
+
+### 5. Apply migrations
+
+```bash
 python manage.py migrate
+```
+
+### 6. Create an administrator (optional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 7. Run the development server
+
+```bash
 python manage.py runserver
 ```
 
-## Tests
+Open your browser and visit:
 
-Run the automated tests using:
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## Running with Docker
+
+### Build the Docker image
 
 ```bash
-python manage.py test
+docker build -t news-capstone .
 ```
-## GitHub Repository
 
-https://github.com/jennifer-amyl/News-project
+### Run the container
+
+```bash
+docker run -p 8000:8000 news-capstone
+```
+
+Visit:
+
+```
+http://localhost:8000
+```
+
+---
+
+## Documentation
+
+Sphinx documentation is located in the `docs` directory.
+
+To build the documentation:
+
+```bash
+cd docs
+make html
+```
+
+The generated HTML files can be found in:
+
+```
+docs/build/html
+```
+
+---
+
+## Repository Structure
+
+```
+NewsWebsite/
+│
+├── docs/
+├── news/
+├── users/
+├── templates/
+├── static/
+├── manage.py
+├── requirements.txt
+├── Dockerfile
+├── README.md
+└── .gitignore
+```
+
+---
 
 ## Author
 
 Jennifer Fernandes
+
+HyperionDev Software Engineering Bootcamp
