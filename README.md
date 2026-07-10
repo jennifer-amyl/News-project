@@ -90,27 +90,35 @@ http://127.0.0.1:8000
 
 ---
 
-## Running with Docker
+## MySQL configuration with Docker
 
-### Build the Docker image
+The project uses MySQL. For normal local development, Django connects to the
+database using `localhost`.
+
+When the application runs inside Docker, `localhost` refers to the container
+itself rather than the Windows host. Use `host.docker.internal` so the container
+can connect to MySQL running on the host machine.
+
+Build the image:
 
 ```bash
-docker build -t news-capstone .
+docker build -t news-project .
 ```
 
-### Run the container
+Run the container on Windows with PowerShell:
 
-```bash
-docker run -p 8000:8000 news-capstone
+```powershell
+docker run --rm -p 8000:8000 `
+  -e DB_HOST=host.docker.internal `
+  -e DB_NAME=news_project_db `
+  -e DB_USER=root `
+  -e DB_PASSWORD=password `
+  -e DB_PORT=3306 `
+  news-project
 ```
 
-Visit:
-
-```
-http://localhost:8000
-```
-
----
+For normal local virtual-environment use, no database environment variables are
+required because the default database host remains `localhost`.
 
 ## Documentation
 
