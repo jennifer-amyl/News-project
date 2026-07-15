@@ -11,6 +11,8 @@ import sys
 import django
 
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../news'))
+sys.path.insert(0, os.path.abspath('../news_project'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'news_project.settings'
 django.setup()
 
@@ -22,7 +24,9 @@ release = '1.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
